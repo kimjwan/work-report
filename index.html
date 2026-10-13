@@ -1,1 +1,98 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  <title>일일 업무보고</title>
+
+  <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.8.3/kakao.min.js"></script>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 20px;
+    }
+
+    h2 {
+      margin-bottom: 20px;
+    }
+
+    #report {
+      white-space: pre-wrap;
+      border: 1px solid #cccccc;
+      border-radius: 8px;
+      padding: 20px;
+      line-height: 1.6;
+      margin-bottom: 20px;
+      background: #fafafa;
+    }
+
+    button {
+      width: 100%;
+      padding: 17px;
+      font-size: 18px;
+      border: none;
+      border-radius: 8px;
+      background: #FEE500;
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body>
+
+<h2>오늘의 업무보고</h2>
+
+<div id="report">
+오늘의 업무보고입니다.
+</div>
+
+<button onclick="sendKakao()">
+카카오톡으로 보내기
+</button>
+
+<script>
+
+Kakao.init('f52b046474fc4af57740f07acc675c5e');
+
+const params = new URLSearchParams(window.location.search);
+
+const reportText =
+  params.get('report') || '오늘의 업무보고입니다.';
+
+const sheetLink =
+  params.get('link') || 'https://docs.google.com';
+
+document.getElementById('report').innerText = reportText;
+
+function sendKakao() {
+
+  let kakaoText = reportText;
+
+  if (kakaoText.length > 180) {
+    kakaoText = kakaoText.substring(0, 180) + '...';
+  }
+
+  Kakao.Share.sendDefault({
+
+    objectType: 'text',
+
+    text: kakaoText,
+
+    link: {
+      mobileWebUrl: sheetLink,
+      webUrl: sheetLink
+    },
+
+    buttonTitle: '상세 업무보고 보기'
+  });
+
+}
+
+</script>
+
+</body>
+</html>
