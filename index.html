@@ -30,14 +30,22 @@
       background: #fafafa;
     }
 
-    button {
+    .btn {
       width: 100%;
       padding: 17px;
       font-size: 18px;
       border: none;
       border-radius: 8px;
-      background: #FEE500;
       cursor: pointer;
+      margin-bottom: 12px;
+    }
+
+    .kakao {
+      background: #FEE500;
+    }
+
+    .sheet {
+      background: #eeeeee;
     }
   </style>
 </head>
@@ -50,8 +58,12 @@
 오늘의 업무보고입니다.
 </div>
 
-<button onclick="sendKakao()">
+<button class="btn kakao" onclick="sendKakao()">
 카카오톡으로 보내기
+</button>
+
+<button class="btn sheet" onclick="openSheet()">
+Google Sheets에서 상세 업무보기
 </button>
 
 <script>
@@ -64,7 +76,7 @@ const reportText =
   params.get('report') || '오늘의 업무보고입니다.';
 
 const sheetLink =
-  params.get('link') || 'https://docs.google.com';
+  params.get('link') || '';
 
 document.getElementById('report').innerText = reportText;
 
@@ -77,18 +89,26 @@ function sendKakao() {
   }
 
   Kakao.Share.sendDefault({
-
     objectType: 'text',
 
     text: kakaoText,
 
     link: {
-      mobileWebUrl: sheetLink,
-      webUrl: sheetLink
+      mobileWebUrl: 'https://kimjwan.github.io/work-report/',
+      webUrl: 'https://kimjwan.github.io/work-report/'
     },
 
     buttonTitle: '상세 업무보고 보기'
   });
+}
+
+function openSheet() {
+
+  if (sheetLink) {
+    window.location.href = sheetLink;
+  } else {
+    alert('Google Sheets 링크가 없습니다.');
+  }
 
 }
 
