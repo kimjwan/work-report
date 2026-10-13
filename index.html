@@ -88,14 +88,16 @@ function sendKakao() {
     kakaoText = kakaoText.substring(0, 180) + '...';
   }
 
+  const currentUrl = window.location.href;
+
   Kakao.Share.sendDefault({
     objectType: 'text',
 
     text: kakaoText,
 
     link: {
-      mobileWebUrl: 'https://kimjwan.github.io/work-report/',
-      webUrl: 'https://kimjwan.github.io/work-report/'
+      mobileWebUrl: currentUrl,
+      webUrl: currentUrl
     },
 
     buttonTitle: '상세 업무보고 보기'
