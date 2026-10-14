@@ -88,7 +88,10 @@ function sendKakao() {
     kakaoText = kakaoText.substring(0, 180) + '...';
   }
 
-  const currentUrl = window.location.href;
+  if (!sheetLink) {
+    alert('Google Sheets 링크가 없습니다.');
+    return;
+  }
 
   Kakao.Share.sendDefault({
     objectType: 'text',
@@ -96,8 +99,8 @@ function sendKakao() {
     text: kakaoText,
 
     link: {
-      mobileWebUrl: currentUrl,
-      webUrl: currentUrl
+      mobileWebUrl: sheetLink,
+      webUrl: sheetLink
     },
 
     buttonTitle: '상세 업무보고 보기'
