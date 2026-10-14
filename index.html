@@ -88,21 +88,15 @@ function sendKakao() {
     kakaoText = kakaoText.substring(0, 180) + '...';
   }
 
-  if (!sheetLink) {
-    alert('Google Sheets 링크가 없습니다.');
-    return;
-  }
+  const currentUrl = window.location.href;
 
   Kakao.Share.sendDefault({
     objectType: 'text',
-
     text: kakaoText,
-
     link: {
-      mobileWebUrl: sheetLink,
-      webUrl: sheetLink
+      mobileWebUrl: currentUrl,
+      webUrl: currentUrl
     },
-
     buttonTitle: '상세 업무보고 보기'
   });
 }
